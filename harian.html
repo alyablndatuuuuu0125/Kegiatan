@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Daftar Kegiatan Harian</title>
+
+<style>
+body{
+font-family: Arial;
+background:#f4f4f4;
+text-align:center;
+}
+
+.container{
+width:400px;
+margin:auto;
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+input{
+width:70%;
+padding:8px;
+}
+
+button{
+padding:8px 12px;
+cursor:pointer;
+}
+
+ul{
+list-style:none;
+padding:0;
+}
+
+li{
+padding:10px;
+margin:5px 0;
+background:#eee;
+display:flex;
+justify-content:space-between;
+}
+
+.selesai{
+text-decoration:line-through;
+color:gray;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h2>Daftar Kegiatan Harian</h2>
+
+<input type="text" id="inputKegiatan" placeholder="Masukkan kegiatan">
+<button onclick="tambahKegiatan()">Tambah</button>
+
+<ul id="daftarKegiatan"></ul>
+
+</div>
+
+<script>
+
+let kegiatan = [];
+
+function tampilkanKegiatan(){
+
+let daftar = document.getElementById("daftarKegiatan");
+daftar.innerHTML="";
+
+kegiatan.forEach((item,index)=>{
+
+let li=document.createElement("li");
+
+li.innerHTML=`
+<span class="${item.selesai ? 'selesai':''}">
+${item.nama}
+</span>
+
+<div>
+<button onclick="toggleSelesai(${index})">✔</button>
+<button onclick="hapusKegiatan(${index})">✖</button>
+</div>
+`;
+
+daftar.appendChild(li);
+
+});
+
+}
+
+function tambahKegiatan(){
+
+let input=document.getElementById("inputKegiatan");
+let nama=input.value;
+
+if(nama===""){
+alert("Kegiatan tidak boleh kosong");
+return;
+}
+
+kegiatan.push({
+nama:nama,
+selesai:false
+});
+
+input.value="";
+tampilkanKegiatan();
+
+}
+
+function toggleSelesai(index){
+
+kegiatan[index].selesai=!kegiatan[index].selesai;
+tampilkanKegiatan();
+
+}
+
+function hapusKegiatan(index){
+
+kegiatan.splice(index,1);
+tampilkanKegiatan();
+
+}
+
+</script>
+
+</body>
+</html>
